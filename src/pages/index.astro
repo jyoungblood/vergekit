@@ -1,0 +1,24 @@
+---
+import { Rocket } from '@lucide/astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="VK">
+  <main
+    class="mx-auto flex min-h-screen max-w-3xl flex-col justify-center px-6 py-16"
+  >
+    <div class="flex items-center gap-3 text-sm font-medium text-slate-600">
+      <Rocket size={18} aria-hidden="true" />
+      <span>VK Boilerplate</span>
+    </div>
+
+    <h1 class="mt-5 text-4xl font-semibold tracking-normal text-slate-950">
+      D1-first Astro app base for Cloudflare Workers.
+    </h1>
+
+    <p class="mt-4 max-w-2xl text-base leading-7 text-slate-600">
+      This starter keeps the first app small while preserving seams for auth,
+      database adapters, forms, email, and future Hyperdrive support.
+    </p>
+  </main>
+</BaseLayout>

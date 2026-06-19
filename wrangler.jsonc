@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "vk",
+  "compatibility_date": "2026-06-19",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true,
+  },
+  "vars": {
+    "APP_NAME": "VK",
+    "DATABASE_TARGET": "d1",
+    "EMAIL_PROVIDER": "console",
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "vk",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "drizzle/d1",
+    },
+  ],
+}

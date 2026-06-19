@@ -1,6 +1,9 @@
 ---
-import { Rocket } from '@lucide/astro';
+import { LayoutDashboard, LogIn, Rocket, UserPlus } from '@lucide/astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Button from '@/components/ui/Button.astro';
+
+const isAuthenticated = Astro.locals.isAuthenticated;
 ---
 
 <BaseLayout title="VK">
@@ -20,5 +23,27 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
       This starter keeps the first app small while preserving seams for auth,
       database adapters, forms, email, and future Hyperdrive support.
     </p>
+
+    {
+      isAuthenticated ? (
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <Button href="/dashboard">
+            <LayoutDashboard size={18} aria-hidden="true" />
+            Dashboard
+          </Button>
+        </div>
+      ) : (
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <Button href="/login">
+            <LogIn size={18} aria-hidden="true" />
+            Sign in
+          </Button>
+          <Button href="/register" variant="secondary">
+            <UserPlus size={18} aria-hidden="true" />
+            Create account
+          </Button>
+        </div>
+      )
+    }
   </main>
 </BaseLayout>

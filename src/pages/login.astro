@@ -22,8 +22,23 @@ const redirectTo = Astro.url.searchParams.get('redirectTo') ?? '/dashboard';
     </p>
   </div>
 
-  <form method="post" action="/api/auth/sign-in/email" class="space-y-5">
+  <form
+    method="post"
+    action="/api/auth/sign-in/email"
+    class="space-y-5"
+    data-auth-form
+    data-auth-error="login-error"
+  >
     <input type="hidden" name="callbackURL" value={redirectTo} />
+
+    <p
+      id="login-error"
+      class="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700"
+      role="alert"
+      aria-live="polite"
+      hidden
+    >
+    </p>
 
     <Field id="login-email" label="Email" required>
       <Input
@@ -81,4 +96,10 @@ const redirectTo = Astro.url.searchParams.get('redirectTo') ?? '/dashboard';
       Create an account
     </a>
   </p>
+
+  <script>
+    import { mountAuthForms } from '@/auth/browser';
+
+    mountAuthForms();
+  </script>
 </AuthShell>

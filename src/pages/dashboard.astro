@@ -30,6 +30,7 @@ const sessionExpiresAt = session?.expiresAt
         </a>
 
         <form method="post" action="/api/auth/sign-out">
+          <input type="hidden" name="redirectTo" value="/" />
           <Button type="submit" variant="secondary" size="sm">
             <LogOut size={16} aria-hidden="true" />
             Sign out

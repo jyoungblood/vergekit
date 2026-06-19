@@ -20,8 +20,23 @@ import Input from '@/components/ui/Input.astro';
     </p>
   </div>
 
-  <form method="post" action="/api/auth/sign-up/email" class="space-y-5">
+  <form
+    method="post"
+    action="/api/auth/sign-up/email"
+    class="space-y-5"
+    data-auth-form
+    data-auth-error="register-error"
+  >
     <input type="hidden" name="callbackURL" value="/dashboard" />
+
+    <p
+      id="register-error"
+      class="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700"
+      role="alert"
+      aria-live="polite"
+      hidden
+    >
+    </p>
 
     <Field id="register-name" label="Name" required>
       <Input
@@ -67,4 +82,10 @@ import Input from '@/components/ui/Input.astro';
       Sign in
     </a>
   </p>
+
+  <script>
+    import { mountAuthForms } from '@/auth/browser';
+
+    mountAuthForms();
+  </script>
 </AuthShell>

@@ -1,0 +1,19 @@
+# Copy to .dev.vars for local `wrangler dev`.
+# Do not commit .dev.vars.
+
+APP_NAME=VK
+DATABASE_TARGET=d1
+EMAIL_PROVIDER=console
+
+# Better Auth requires a stable secret. Use at least 32 random characters.
+BETTER_AUTH_SECRET=replace-with-at-least-32-random-characters
+BETTER_AUTH_URL=http://localhost:4321
+
+# Optional sender defaults used by non-console email providers.
+# EMAIL_FROM=VK <noreply@example.com>
+# EMAIL_REPLY_TO=support@example.com
+
+# Optional provider credentials. Configure only the provider selected by EMAIL_PROVIDER.
+# RESEND_API_KEY=
+# MAILGUN_API_KEY=
+# MAILGUN_DOMAIN=

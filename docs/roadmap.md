@@ -8,16 +8,16 @@ VK is D1-first and adapter-ready. The first implementation supports Cloudflare D
 
 ## Slice Tracker
 
-| Slice                       | Status      | Goal                                                                                                                              | Verification                                                                    |
-| --------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| 1. Foundation               | Done        | Scaffold Astro on Cloudflare Workers with strict TypeScript, Tailwind 4, baseline tooling, and deployment config.                 | `npm run check`, `npm run build`, `npm run lint`                                |
-| 2. D1 Database Contract     | Done        | Add Drizzle D1 schema, adapter-ready `src/db` surface, and portability proof tests.                                               | `npm run test -- tests/db`, `npm run db:generate`, `npm run check`              |
-| 3. Auth Spine               | Done        | Add Better Auth config, D1-backed schema, auth route, typed locals, and middleware route guards.                                  | `npm run test -- tests/auth tests/middleware`, `npm run check`, `npm run build` |
-| 4. Email Layer              | Done        | Add provider-based mailer with console, Cloudflare Email, Resend, Mailgun, and Node SMTP seams; render auth emails with Backstro. | `npm run test -- tests/email`, `npm run check`                                  |
-| 5. Form And API Conventions | Done        | Add Zod parsing helpers, standard JSON responses, Astro Actions patterns, and one sample mutation.                                | `npm run test -- tests/http tests/actions`, `npm run check`                     |
-| 6. Minimal Auth UI          | Done        | Add Bejamas-derived form components, Lucide Astro icons, login/register/reset/verify pages, and dashboard shell.                  | `npm run check`, `npm run build`, user visual verification                      |
-| 7. Operational Polish       | Not started | Add docs, example env files, D1 setup notes, first ADRs, and CI-ready scripts.                                                    | `npm run verify`, documentation review                                          |
-| 8. Hyperdrive Proof         | Deferred    | Add non-runtime PostgreSQL/MySQL proof tests for the adapter seam without making Hyperdrive a supported production target yet.    | Targeted adapter tests and a documented gap list                                |
+| Slice                       | Status   | Goal                                                                                                                              | Verification                                                                    |
+| --------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| 1. Foundation               | Done     | Scaffold Astro on Cloudflare Workers with strict TypeScript, Tailwind 4, baseline tooling, and deployment config.                 | `npm run check`, `npm run build`, `npm run lint`                                |
+| 2. D1 Database Contract     | Done     | Add Drizzle D1 schema, adapter-ready `src/db` surface, and portability proof tests.                                               | `npm run test -- tests/db`, `npm run db:generate`, `npm run check`              |
+| 3. Auth Spine               | Done     | Add Better Auth config, D1-backed schema, auth route, typed locals, and middleware route guards.                                  | `npm run test -- tests/auth tests/middleware`, `npm run check`, `npm run build` |
+| 4. Email Layer              | Done     | Add provider-based mailer with console, Cloudflare Email, Resend, Mailgun, and Node SMTP seams; render auth emails with Backstro. | `npm run test -- tests/email`, `npm run check`                                  |
+| 5. Form And API Conventions | Done     | Add Zod parsing helpers, standard JSON responses, Astro Actions patterns, and one sample mutation.                                | `npm run test -- tests/http tests/actions`, `npm run check`                     |
+| 6. Minimal Auth UI          | Done     | Add Bejamas-derived form components, Lucide Astro icons, login/register/reset/verify pages, and dashboard shell.                  | `npm run check`, `npm run build`, user visual verification                      |
+| 7. Operational Polish       | Done     | Add docs, example env files, D1 setup notes, first ADRs, and CI-ready scripts.                                                    | `npm run verify`, documentation review                                          |
+| 8. Hyperdrive Proof         | Deferred | Add non-runtime PostgreSQL/MySQL proof tests for the adapter seam without making Hyperdrive a supported production target yet.    | Targeted adapter tests and a documented gap list                                |
 
 ## First Milestone
 

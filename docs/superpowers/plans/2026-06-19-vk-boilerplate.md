@@ -6,7 +6,7 @@
 
 **Architecture:** VK starts as an Astro server-rendered app deployed through the Cloudflare Workers adapter. D1 is the only supported runtime database in the first milestone, but all app code uses a stable `src/db` import surface so future Hyperdrive drivers can be added without rewriting app-level queries. Framework-like helpers stay thin, local, and easily extractable later.
 
-**Tech Stack:** Astro, `@astrojs/cloudflare`, Cloudflare Workers, D1, Drizzle ORM, Drizzle Kit, Better Auth, Zod, Tailwind CSS 4, Bejamas UI patterns, `@lucide/astro`, `@backstro/email`, Vitest, happy-dom, Prettier, oxlint, npm.
+**Tech Stack:** Astro, `@astrojs/cloudflare`, Cloudflare Workers, D1, Drizzle ORM, Drizzle Kit, Better Auth, Zod, Tailwind CSS 4, Bejamas UI patterns, `@lucide/astro`, `@backstro/email`, Vitest, happy-dom, oxlint, npm.
 
 ---
 
@@ -125,7 +125,7 @@ Expected: dependencies are added to `package.json`.
 Run:
 
 ```bash
-npm install -D wrangler vitest happy-dom prettier prettier-plugin-astro oxlint
+npm install -D wrangler vitest happy-dom oxlint
 ```
 
 Expected: dev dependencies are added to `package.json`.
@@ -142,11 +142,9 @@ Update `package.json` scripts to include:
     "preview": "astro preview",
     "check": "astro check",
     "lint": "oxlint .",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "verify": "npm run check && npm run lint && npm run format:check && npm run test && npm run build"
+    "verify": "npm run check && npm run lint && npm run test && npm run build"
   }
 }
 ```
@@ -348,7 +346,6 @@ Run:
 ```bash
 npm run check
 npm run lint
-npm run format:check
 npm run build
 ```
 

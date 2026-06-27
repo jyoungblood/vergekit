@@ -1,6 +1,0 @@
-node_modules/
-dist/
-.astro/
-.wrangler/
-docs/superpowers/plans/
-package-lock.json

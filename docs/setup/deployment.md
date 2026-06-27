@@ -12,8 +12,7 @@ Run the same verification command locally and in CI:
 npm run verify
 ```
 
-This runs type checking, linting, Prettier checks, tests, and the production
-build.
+This runs type checking, linting, tests, and the production build.
 
 Build directly when investigating adapter or bundling issues:
 
@@ -96,5 +95,7 @@ npx wrangler secret list --env production
 4. Configure `BETTER_AUTH_SECRET` and any provider credentials with
    `wrangler secret put`.
 5. Run `npm run db:migrate:remote`.
-6. Run `npm run verify`.
-7. Deploy with the project Cloudflare workflow.
+6. Optionally create a verified admin user with
+   `npm run init:admin -- --remote`.
+7. Run `npm run verify`.
+8. Deploy with the project Cloudflare workflow.

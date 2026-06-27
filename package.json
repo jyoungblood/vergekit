@@ -9,15 +9,14 @@
     "preview": "astro preview",
     "check": "astro check",
     "lint": "oxlint .",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
     "test": "vitest run",
     "test:watch": "vitest",
     "db:generate": "drizzle-kit generate",
     "db:studio": "drizzle-kit studio",
     "db:migrate:local": "wrangler d1 migrations apply vk --local",
     "db:migrate:remote": "wrangler d1 migrations apply vk --remote",
-    "verify": "npm run check && npm run lint && npm run format:check && npm run test && npm run build"
+    "init:admin": "tsx cli/init-admin.ts",
+    "verify": "npm run check && npm run lint && npm run test && npm run build"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.0.1",
@@ -38,8 +37,6 @@
     "drizzle-kit": "^0.31.10",
     "happy-dom": "^20.10.6",
     "oxlint": "^1.70.0",
-    "prettier": "^3.8.4",
-    "prettier-plugin-astro": "^0.14.1",
     "tsx": "^4.22.4",
     "typescript": "^6.0.3",
     "vite": "^8.1.0",

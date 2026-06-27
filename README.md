@@ -25,7 +25,7 @@ plain Tailwind UI base.
 - Zod helpers for API request validation.
 - Astro Actions example for form-backed mutations.
 - CSRF origin checks through Astro config.
-- Vitest, happy-dom, oxlint, Prettier, and `npm run verify`.
+- Vitest, happy-dom, oxlint, and `npm run verify`.
 
 ## Quickstart
 
@@ -68,6 +68,20 @@ Apply local D1 migrations:
 ```bash
 npm run db:migrate:local
 ```
+
+Optionally create a verified local admin user after migrations:
+
+```bash
+npm run init:admin
+```
+
+This writes directly to D1 with Wrangler and does not require `npm run dev`.
+
+The default database setup is Cloudflare D1 through the `DB` binding in
+`wrangler.jsonc`. Local dev uses Wrangler/Miniflare-backed D1 state through the
+Astro Cloudflare adapter; no separate Miniflare config is required after
+`npm install`. See [D1 Setup](docs/setup/d1.md) for production database setup
+and alternate local or Cloudflare-hosted dev database options.
 
 Start the app:
 
@@ -164,8 +178,10 @@ npm run build               # production build
 npm run check               # Astro and TypeScript checks
 npm run lint                # oxlint
 npm run test                # Vitest
-npm run verify              # check, lint, format check, tests, build
+npm run verify              # check, lint, tests, build
 npm run db:generate         # generate Drizzle migrations
+npm run db:studio           # open Drizzle Studio for D1 HTTP
 npm run db:migrate:local    # apply D1 migrations locally
 npm run db:migrate:remote   # apply D1 migrations remotely
+npm run init:admin          # create a verified D1 admin user
 ```

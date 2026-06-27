@@ -50,15 +50,27 @@ describe('operational polish documentation contract', () => {
   });
 
   it('documents D1 setup and deployment workflows', async () => {
+    const readme = await readProjectFile('README.md');
     const d1Setup = await readProjectFile('docs/setup/d1.md');
     const deployment = await readProjectFile('docs/setup/deployment.md');
 
+    expect(readme).toContain('npm run init:admin');
+    expect(readme).toContain('npm run db:studio');
     expect(d1Setup).toContain('wrangler d1 create vk');
     expect(d1Setup).toContain('npm run db:generate');
+    expect(d1Setup).toContain('npm run db:studio');
     expect(d1Setup).toContain('npm run db:migrate:local');
     expect(d1Setup).toContain('npm run db:migrate:remote');
+    expect(d1Setup).toContain('npm run init:admin');
     expect(d1Setup).toContain('database_id');
+    expect(d1Setup).toContain('Miniflare');
+    expect(d1Setup).toContain('preview_database_id');
+    expect(d1Setup).toContain('remote: true');
+    expect(d1Setup).toContain('Chrome extension is not required');
+    expect(d1Setup).toContain('drizzle.studio.local.config.ts');
+    expect(d1Setup).toContain('LOCAL_D1_SQLITE_PATH');
 
+    expect(deployment).toContain('npm run init:admin -- --remote');
     expect(deployment).toContain('npm run verify');
     expect(deployment).toContain('wrangler secret put BETTER_AUTH_SECRET');
     expect(deployment).toContain('wrangler secret put RESEND_API_KEY');
@@ -73,7 +85,11 @@ describe('operational polish documentation contract', () => {
     };
 
     expect(packageJson.scripts?.verify).toBe(
-      'npm run check && npm run lint && npm run format:check && npm run test && npm run build',
+      'npm run check && npm run lint && npm run test && npm run build',
     );
+    expect(packageJson.scripts?.['db:studio']).toBe('drizzle-kit studio');
+    expect(packageJson.scripts).not.toHaveProperty('db:studio:remote');
+    expect(packageJson.scripts).not.toHaveProperty('db:studio:local');
+    expect(packageJson.scripts?.['init:admin']).toBe('tsx cli/init-admin.ts');
   });
 });

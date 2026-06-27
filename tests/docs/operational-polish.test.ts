@@ -69,6 +69,10 @@ describe('operational polish documentation contract', () => {
     expect(d1Setup).toContain('Chrome extension is not required');
     expect(d1Setup).toContain('drizzle.studio.local.config.ts');
     expect(d1Setup).toContain('LOCAL_D1_SQLITE_PATH');
+    expect(d1Setup).toContain(
+      '.wrangler/state/v3/d1/miniflare-D1DatabaseObject/',
+    );
+    expect(d1Setup).toContain('metadata.sqlite');
 
     expect(deployment).toContain('npm run init:admin -- --remote');
     expect(deployment).toContain('npm run verify');

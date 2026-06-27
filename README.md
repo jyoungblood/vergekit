@@ -149,19 +149,16 @@ named environment, pass the environment name:
 npx wrangler secret put BETTER_AUTH_SECRET --env production
 ```
 
-If you add named environments under `env` in `wrangler.jsonc`, repeat `vars` and
-bindings there because Wrangler does not inherit them from the top level.
-
 ## Common Commands
 
 ```bash
-npm run dev              # local Astro dev server
-npm run build            # production build
-npm run check            # Astro and TypeScript checks
-npm run lint             # oxlint
-npm run test             # Vitest
-npm run verify           # check, lint, format check, tests, build
-npm run db:generate      # generate Drizzle migrations
-npm run db:migrate:local # apply D1 migrations locally
-npm run db:migrate:remote # apply D1 migrations remotely
+npm run dev                 # local Astro dev server
+npm run build               # production build
+npm run check               # Astro and TypeScript checks
+npm run lint                # oxlint
+npm run test                # Vitest
+npm run verify              # check, lint, format check, tests, build
+npm run db:generate         # generate Drizzle migrations
+npm run db:migrate:local    # apply D1 migrations locally
+npm run db:migrate:remote   # apply D1 migrations remotely
 ```

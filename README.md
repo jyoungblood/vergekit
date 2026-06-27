@@ -29,9 +29,15 @@ plain Tailwind UI base.
 
 ## Quickstart
 
+Clone the repository
+```bash
+npm create vergekit@latest my-app
+```
+
 Install dependencies:
 
 ```bash
+cd my-app
 npm install
 ```
 

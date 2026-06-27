@@ -1,4 +1,5 @@
 # Verge Kit
+
 ## A solid foundation for building web applications with Astro and Cloudflare Workers.
 
 It starts with the pieces most full-stack apps need: server-rendered Astro, D1,
@@ -25,26 +26,6 @@ plain Tailwind UI base.
 - Astro Actions example for form-backed mutations.
 - CSRF origin checks through Astro config.
 - Vitest, happy-dom, oxlint, Prettier, and `npm run verify`.
-- Hyperdrive proof tests for future PostgreSQL/MySQL support. Runtime support is
-  D1 only for now.
-
-## Main Dependencies
-
-- `astro`
-- `@astrojs/cloudflare`
-- `better-auth`
-- `@better-auth/drizzle-adapter`
-- `drizzle-orm`
-- `drizzle-kit`
-- `tailwindcss`
-- `@tailwindcss/vite`
-- `@backstro/email`
-- `zod`
-- `wrangler`
-- `vitest`
-- `happy-dom`
-- `oxlint`
-- `prettier`
 
 ## Quickstart
 
@@ -54,11 +35,14 @@ Install dependencies:
 npm install
 ```
 
-Create local runtime variables:
+Create local runtime secrets:
 
 ```bash
 cp .dev.vars.example .dev.vars
 ```
+
+Committed, non-secret app defaults live in `wrangler.jsonc` under `vars`.
+Use `.dev.vars` only for local secrets or local-only overrides.
 
 Generate a Better Auth secret:
 
@@ -70,12 +54,6 @@ Paste the value into `.dev.vars`:
 
 ```bash
 BETTER_AUTH_SECRET=your-generated-secret
-```
-
-Or update it from the shell:
-
-```bash
-secret="$(openssl rand -base64 32)" && awk -v secret="$secret" 'BEGIN { done = 0 } /^BETTER_AUTH_SECRET=/ { print "BETTER_AUTH_SECRET=" secret; done = 1; next } { print } END { if (!done) print "BETTER_AUTH_SECRET=" secret }' .dev.vars > .dev.vars.tmp && mv .dev.vars.tmp .dev.vars
 ```
 
 Apply local D1 migrations:
@@ -97,12 +75,22 @@ Open the local Astro URL shown in the terminal.
 The default local provider is `console`. It logs auth emails instead of sending
 them.
 
-For full auth flows with real email delivery, configure email before testing
-registration, verification, or password reset:
+For local auth flows with real email delivery, configure the provider before
+testing registration, verification, or password reset. Put shared non-secret
+provider configuration in `wrangler.jsonc`:
+
+```jsonc
+{
+  "vars": {
+    "EMAIL_PROVIDER": "resend",
+    "EMAIL_FROM": "VK <noreply@example.com>",
+  },
+}
+```
+
+Put local provider secrets in `.dev.vars`:
 
 ```bash
-EMAIL_PROVIDER=resend
-EMAIL_FROM="VK <noreply@example.com>"
 RESEND_API_KEY=your-api-key
 ```
 
@@ -117,6 +105,53 @@ Supported provider names:
 `smtp-node` is for explicit Node usage. Cloudflare Workers should use
 Cloudflare Email, Resend, Mailgun, or another fetch/binding-based provider.
 
+## Runtime Configuration
+
+Use `wrangler.jsonc` as the committed source of truth for non-secret Worker app
+configuration:
+
+```jsonc
+{
+  "vars": {
+    "APP_NAME": "VK",
+    "DATABASE_TARGET": "d1",
+    "EMAIL_PROVIDER": "console",
+  },
+}
+```
+
+Typical non-secret values include `APP_NAME`, `DATABASE_TARGET`,
+`EMAIL_PROVIDER`, `EMAIL_FROM`, `EMAIL_REPLY_TO`, `BETTER_AUTH_URL`, and
+`MAILGUN_DOMAIN`. Do not put secret values in `wrangler.jsonc`.
+
+Use `.dev.vars` for local secret values:
+
+```bash
+BETTER_AUTH_SECRET=your-local-secret
+BETTER_AUTH_URL=http://localhost:4321
+RESEND_API_KEY=your-local-resend-key
+MAILGUN_API_KEY=your-local-mailgun-key
+MAILGUN_DOMAIN=mg.example.com
+```
+
+Use Wrangler secrets for deployed secret values:
+
+```bash
+npx wrangler secret put BETTER_AUTH_SECRET
+npx wrangler secret put RESEND_API_KEY
+npx wrangler secret put MAILGUN_API_KEY
+```
+
+Wrangler prompts for each value without storing it in the repo. If you deploy a
+named environment, pass the environment name:
+
+```bash
+npx wrangler secret put BETTER_AUTH_SECRET --env production
+```
+
+If you add named environments under `env` in `wrangler.jsonc`, repeat `vars` and
+bindings there because Wrangler does not inherit them from the top level.
+
 ## Common Commands
 
 ```bash
@@ -130,24 +165,3 @@ npm run db:generate      # generate Drizzle migrations
 npm run db:migrate:local # apply D1 migrations locally
 npm run db:migrate:remote # apply D1 migrations remotely
 ```
-
-## Database Position
-
-VK is D1-first.
-
-App code should use the local `src/db` modules instead of importing a Drizzle
-dialect directly in routes, actions, or UI code. This keeps a clear path for
-future Hyperdrive-backed PostgreSQL or MySQL support without changing ordinary
-application query call sites.
-
-PostgreSQL and MySQL are proof targets only in this release.
-
-## Public Docs
-
-Draft public docs live in `public-docs/`:
-
-- `overview.md`
-- `installation.md`
-- `deployment.md`
-- `core-concepts.md`
-- `marketing-hero.md`

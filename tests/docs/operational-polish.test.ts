@@ -8,22 +8,24 @@ async function readProjectFile(path: string) {
 }
 
 describe('operational polish documentation contract', () => {
-  it('documents local and CI environment variables without real secrets', async () => {
-    const envExample = await readProjectFile('.env.example');
+  it('keeps Worker app variables in Wrangler config and local secrets in dev vars', async () => {
+    const wranglerConfig = await readProjectFile('wrangler.jsonc');
     const devVarsExample = await readProjectFile('.dev.vars.example');
 
-    expect(envExample).toContain('CLOUDFLARE_ACCOUNT_ID=');
-    expect(envExample).toContain('CLOUDFLARE_DATABASE_ID=');
-    expect(envExample).toContain('CLOUDFLARE_D1_TOKEN=');
-    expect(envExample).toContain('DATABASE_TARGET=d1');
+    expect(wranglerConfig).toContain('"vars"');
+    expect(wranglerConfig).toContain('"APP_NAME": "VK"');
+    expect(wranglerConfig).toContain('"DATABASE_TARGET": "d1"');
+    expect(wranglerConfig).toContain('"EMAIL_PROVIDER": "console"');
 
-    expect(devVarsExample).toContain('APP_NAME=VK');
-    expect(devVarsExample).toContain('DATABASE_TARGET=d1');
-    expect(devVarsExample).toContain('EMAIL_PROVIDER=console');
     expect(devVarsExample).toContain('BETTER_AUTH_SECRET=');
     expect(devVarsExample).toContain('BETTER_AUTH_URL=');
+    expect(devVarsExample).not.toContain('APP_NAME=');
+    expect(devVarsExample).not.toContain('DATABASE_TARGET=');
+    expect(devVarsExample).not.toContain('EMAIL_PROVIDER=');
 
-    expect(`${envExample}\n${devVarsExample}`).not.toMatch(
+    await expect(readProjectFile('.env.example')).rejects.toThrow();
+
+    expect(`${wranglerConfig}\n${devVarsExample}`).not.toMatch(
       /(sk-[a-z0-9]|-----BEGIN|real-secret|changeme)/i,
     );
   });
@@ -59,7 +61,9 @@ describe('operational polish documentation contract', () => {
 
     expect(deployment).toContain('npm run verify');
     expect(deployment).toContain('wrangler secret put BETTER_AUTH_SECRET');
-    expect(deployment).toContain('wrangler secret put');
+    expect(deployment).toContain('wrangler secret put RESEND_API_KEY');
+    expect(deployment).toContain('wrangler secret put MAILGUN_API_KEY');
+    expect(deployment).toContain('wrangler.jsonc');
     expect(deployment).toContain('npm run build');
   });
 

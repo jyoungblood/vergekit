@@ -13,16 +13,16 @@ not a production-compatible default.
 
 ## Decision
 
-VK selects email delivery with the `EMAIL_PROVIDER` environment value. The
-default is `console`, which renders messages to logs for local development and
-tests. Production Workers can use Cloudflare Email through the `EMAIL` binding or
-HTTP API providers such as Resend and Mailgun.
+VK selects email delivery with the `EMAIL_PROVIDER` Worker variable. Committed
+non-secret app values live in `wrangler.jsonc` vars. The default provider is
+`console`, which renders messages to logs for local development and tests.
+Production Workers can use Cloudflare Email through the `EMAIL` binding or HTTP
+API providers such as Resend and Mailgun.
 
 Provider credentials are secrets. Local secrets belong in `.dev.vars`, and
 deployed values belong in Wrangler secrets, for example
 `wrangler secret put BETTER_AUTH_SECRET` or the provider-specific API key. Secrets
-must not be committed in `wrangler.jsonc`, `.env.example`, or
-`.dev.vars.example`.
+must not be committed in `wrangler.jsonc` or `.dev.vars.example`.
 
 The explicit Node SMTP provider exists for non-Workers tooling or future
 server-side reuse. It is intentionally not the default Workers strategy.

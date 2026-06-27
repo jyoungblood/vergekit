@@ -3,6 +3,7 @@ dist/
 .astro/
 .wrangler/
 .dev.vars
+# Ignore accidental dotenv files; app runtime config uses wrangler.jsonc plus .dev.vars.
 .env
 .env.local
 npm-debug.log*

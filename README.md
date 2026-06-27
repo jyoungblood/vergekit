@@ -1,13 +1,9 @@
-# VK
-
-VK is a small Astro application boilerplate for Cloudflare Workers.
+# Verge Kit
+## A small application boilerplate for Astro and Cloudflare Workers.
 
 It starts with the pieces most full-stack apps need: server-rendered Astro, D1,
 Drizzle, Better Auth, email, middleware, Zod validation, Astro Actions, and a
 plain Tailwind UI base.
-
-The goal is not to be a framework. The goal is to be a clean starting point that
-uses the platform and the stack directly.
 
 ## What It Includes
 

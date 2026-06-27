@@ -1,5 +1,5 @@
 # Verge Kit
-## A small application boilerplate for Astro and Cloudflare Workers.
+## A solid foundation for building web applications with Astro and Cloudflare Workers.
 
 It starts with the pieces most full-stack apps need: server-rendered Astro, D1,
 Drizzle, Better Auth, email, middleware, Zod validation, Astro Actions, and a

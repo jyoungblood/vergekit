@@ -1,8 +1,8 @@
 ---
-import { LogIn } from '@lucide/astro';
 import AuthShell from '@/components/auth/AuthShell.astro';
 import Button from '@/components/ui/Button.astro';
 import Field from '@/components/ui/Field.astro';
+import Icon from '@/components/ui/Icon.astro';
 import Input from '@/components/ui/Input.astro';
 
 const redirectTo = Astro.url.searchParams.get('redirectTo') ?? '/dashboard';
@@ -82,7 +82,7 @@ const redirectTo = Astro.url.searchParams.get('redirectTo') ?? '/dashboard';
     </div>
 
     <Button type="submit" fullWidth>
-      <LogIn size={18} aria-hidden="true" />
+      <Icon name="log-in" size={18} aria-hidden="true" />
       Sign in
     </Button>
   </form>

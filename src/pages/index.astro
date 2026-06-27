@@ -1,7 +1,7 @@
 ---
-import { LayoutDashboard, LogIn, Rocket, UserPlus } from '@lucide/astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Button from '@/components/ui/Button.astro';
+import Icon from '@/components/ui/Icon.astro';
 
 const isAuthenticated = Astro.locals.isAuthenticated;
 ---
@@ -11,7 +11,7 @@ const isAuthenticated = Astro.locals.isAuthenticated;
     class="mx-auto flex min-h-screen max-w-3xl flex-col justify-center px-6 py-16"
   >
     <div class="flex items-center gap-3 text-sm font-medium text-slate-600">
-      <Rocket size={18} aria-hidden="true" />
+      <Icon name="rocket" size={18} aria-hidden="true" />
       <span>VK Boilerplate</span>
     </div>
 
@@ -28,18 +28,18 @@ const isAuthenticated = Astro.locals.isAuthenticated;
       isAuthenticated ? (
         <div class="mt-8 flex flex-col gap-3 sm:flex-row">
           <Button href="/dashboard">
-            <LayoutDashboard size={18} aria-hidden="true" />
+            <Icon name="layout-dashboard" size={18} aria-hidden="true" />
             Dashboard
           </Button>
         </div>
       ) : (
         <div class="mt-8 flex flex-col gap-3 sm:flex-row">
           <Button href="/login">
-            <LogIn size={18} aria-hidden="true" />
+            <Icon name="log-in" size={18} aria-hidden="true" />
             Sign in
           </Button>
           <Button href="/register" variant="secondary">
-            <UserPlus size={18} aria-hidden="true" />
+            <Icon name="user-plus" size={18} aria-hidden="true" />
             Create account
           </Button>
         </div>

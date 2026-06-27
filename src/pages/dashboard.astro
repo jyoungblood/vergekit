@@ -1,7 +1,7 @@
 ---
-import { CircleUserRound, Database, LogOut, ShieldCheck } from '@lucide/astro';
 import Button from '@/components/ui/Button.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Icon from '@/components/ui/Icon.astro';
 
 const user = Astro.locals.user;
 const session = Astro.locals.session;
@@ -24,7 +24,7 @@ const sessionExpiresAt = session?.expiresAt
           <span
             class="flex size-10 items-center justify-center rounded-lg bg-slate-950 text-white"
           >
-            <ShieldCheck size={20} aria-hidden="true" />
+            <Icon name="shield-check" size={20} aria-hidden="true" />
           </span>
           VK
         </a>
@@ -32,7 +32,7 @@ const sessionExpiresAt = session?.expiresAt
         <form method="post" action="/api/auth/sign-out">
           <input type="hidden" name="redirectTo" value="/" />
           <Button type="submit" variant="secondary" size="sm">
-            <LogOut size={16} aria-hidden="true" />
+            <Icon name="log-out" size={16} aria-hidden="true" />
             Sign out
           </Button>
         </form>
@@ -58,7 +58,7 @@ const sessionExpiresAt = session?.expiresAt
         <div class="grid gap-3 text-sm">
           <div class="rounded-lg border border-slate-200 bg-slate-50 p-4">
             <div class="flex items-center gap-3 font-medium text-slate-950">
-              <CircleUserRound size={18} aria-hidden="true" />
+              <Icon name="circle-user-round" size={18} aria-hidden="true" />
               Account
             </div>
             <p class="mt-2 text-slate-600">{user?.email ?? 'No email found'}</p>
@@ -66,7 +66,7 @@ const sessionExpiresAt = session?.expiresAt
 
           <div class="rounded-lg border border-slate-200 bg-slate-50 p-4">
             <div class="flex items-center gap-3 font-medium text-slate-950">
-              <Database size={18} aria-hidden="true" />
+              <Icon name="database" size={18} aria-hidden="true" />
               Session
             </div>
             <p class="mt-2 text-slate-600">{sessionExpiresAt}</p>

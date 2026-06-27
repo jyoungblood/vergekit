@@ -1,8 +1,8 @@
 ---
-import { BadgeCheck } from '@lucide/astro';
 import AuthShell from '@/components/auth/AuthShell.astro';
 import Button from '@/components/ui/Button.astro';
 import Field from '@/components/ui/Field.astro';
+import Icon from '@/components/ui/Icon.astro';
 import Input from '@/components/ui/Input.astro';
 ---
 
@@ -39,7 +39,7 @@ import Input from '@/components/ui/Input.astro';
     </Field>
 
     <Button type="submit" fullWidth>
-      <BadgeCheck size={18} aria-hidden="true" />
+      <Icon name="badge-check" size={18} aria-hidden="true" />
       Send verification
     </Button>
   </form>

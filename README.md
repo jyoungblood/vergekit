@@ -42,7 +42,6 @@ uses the platform and the stack directly.
 - `drizzle-kit`
 - `tailwindcss`
 - `@tailwindcss/vite`
-- `@lucide/astro`
 - `@backstro/email`
 - `zod`
 - `wrangler`

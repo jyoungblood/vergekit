@@ -11,6 +11,30 @@ describe('Better Auth D1 schema', () => {
     expect(getTableName(verification)).toBe('verification');
   });
 
+  it('includes Better Auth admin plugin fields for app roles and bans', () => {
+    const db = createD1Database({} as Parameters<typeof createD1Database>[0]);
+
+    const userQuery = db
+      .select({
+        role: user.role,
+        banned: user.banned,
+        banReason: user.banReason,
+        banExpires: user.banExpires,
+      })
+      .from(user)
+      .toSQL();
+    const sessionQuery = db
+      .select({ impersonatedBy: session.impersonatedBy })
+      .from(session)
+      .toSQL();
+
+    expect(userQuery.sql).toContain('"role"');
+    expect(userQuery.sql).toContain('"banned"');
+    expect(userQuery.sql).toContain('"banReason"');
+    expect(userQuery.sql).toContain('"banExpires"');
+    expect(sessionQuery.sql).toContain('"impersonatedBy"');
+  });
+
   it('keeps auth queries on the shared D1 drizzle client surface', () => {
     const db = createD1Database({} as Parameters<typeof createD1Database>[0]);
 

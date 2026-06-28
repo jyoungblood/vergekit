@@ -20,6 +20,7 @@ describe('Better Auth server config', () => {
     expect(options.baseURL).toBe('https://vk.example.com');
     expect(options.secret).toBe('test-secret-with-at-least-32-characters');
     expect(options.emailAndPassword).toEqual({ enabled: true });
+    expect(options.plugins?.map((plugin) => plugin.id)).toContain('admin');
   });
 
   it('creates a Better Auth handler and session API from the shared database seam', () => {

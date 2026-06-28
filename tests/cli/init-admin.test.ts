@@ -59,7 +59,7 @@ EMPTY=
       }),
     ).toBe(
       [
-        'INSERT INTO "user" ("id", "name", "email", "emailVerified", "image", "createdAt", "updatedAt") VALUES (\'user-1\', \'Ada O\'\'Connor\', \'ada@example.com\', 1, NULL, 1782561605, 1782561605);',
+        'INSERT INTO "user" ("id", "name", "email", "emailVerified", "image", "role", "banned", "banReason", "banExpires", "createdAt", "updatedAt") VALUES (\'user-1\', \'Ada O\'\'Connor\', \'ada@example.com\', 1, NULL, \'admin\', 0, NULL, NULL, 1782561605, 1782561605);',
         'INSERT INTO "account" ("id", "accountId", "providerId", "userId", "accessToken", "refreshToken", "idToken", "accessTokenExpiresAt", "refreshTokenExpiresAt", "scope", "password", "createdAt", "updatedAt") VALUES (\'account-1\', \'user-1\', \'credential\', \'user-1\', NULL, NULL, NULL, NULL, NULL, NULL, \'hash\'\'value\', 1782561605, 1782561605);',
       ].join('\n'),
     );

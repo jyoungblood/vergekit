@@ -1,5 +1,12 @@
 import { drizzleAdapter } from '@better-auth/drizzle-adapter';
 import { betterAuth, type BetterAuthOptions } from 'better-auth';
+import { admin as adminPlugin } from 'better-auth/plugins';
+import {
+  ADMIN_APP_ROLES,
+  DEFAULT_APP_ROLE,
+  accessControl,
+  authRoles,
+} from '@/auth/permissions';
 import { createD1Database, type AppDatabase } from '@/db/client';
 import * as schema from '@/db/schema';
 import {
@@ -61,6 +68,14 @@ export function buildAuthOptions({
           },
         }
       : undefined,
+    plugins: [
+      adminPlugin({
+        defaultRole: DEFAULT_APP_ROLE,
+        adminRoles: [...ADMIN_APP_ROLES],
+        ac: accessControl,
+        roles: authRoles,
+      }),
+    ],
   };
 }
 

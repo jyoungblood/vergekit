@@ -21,8 +21,10 @@ declare namespace Cloudflare {
 
 declare namespace App {
   interface Locals {
-    user: import('better-auth').User | null;
-    session: import('better-auth').Session | null;
+    user: import('@/auth/permissions').AppUser | null;
+    session: (import('better-auth').Session & {
+      impersonatedBy?: string | null;
+    }) | null;
     isAuthenticated: boolean;
   }
 }

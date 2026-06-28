@@ -154,7 +154,7 @@ export function buildCreateAdminUserSql({
   const normalizedEmail = email.trim().toLowerCase();
 
   return [
-    `INSERT INTO "user" ("id", "name", "email", "emailVerified", "image", "createdAt", "updatedAt") VALUES (${sqlString(userId)}, ${sqlString(name)}, ${sqlString(normalizedEmail)}, 1, ${sqlNullableString(null)}, ${timestamp}, ${timestamp});`,
+    `INSERT INTO "user" ("id", "name", "email", "emailVerified", "image", "role", "banned", "banReason", "banExpires", "createdAt", "updatedAt") VALUES (${sqlString(userId)}, ${sqlString(name)}, ${sqlString(normalizedEmail)}, 1, ${sqlNullableString(null)}, 'admin', 0, NULL, NULL, ${timestamp}, ${timestamp});`,
     `INSERT INTO "account" ("id", "accountId", "providerId", "userId", "accessToken", "refreshToken", "idToken", "accessTokenExpiresAt", "refreshTokenExpiresAt", "scope", "password", "createdAt", "updatedAt") VALUES (${sqlString(accountId)}, ${sqlString(userId)}, 'credential', ${sqlString(userId)}, NULL, NULL, NULL, NULL, NULL, NULL, ${sqlString(passwordHash)}, ${timestamp}, ${timestamp});`,
   ].join('\n');
 }
@@ -214,7 +214,7 @@ export function setTerminalEcho(
 }
 
 function showHelp() {
-  console.log(`Create a verified Better Auth admin user in D1.
+  console.log(`Create a verified Better Auth user with the admin role in D1.
 
 Usage:
   npm run init:admin
@@ -389,12 +389,12 @@ async function main() {
   const admin = await promptForAdminUser();
 
   console.log(
-    `\nCreating verified admin user in ${target} D1 database "${DEFAULT_DATABASE_NAME}"...`,
+    `\nCreating verified user with the admin role in ${target} D1 database "${DEFAULT_DATABASE_NAME}"...`,
   );
 
   await createAdminUser(admin, target);
 
-  console.log(`\nAdmin user created: ${admin.email}`);
+  console.log(`\nAdmin role user created: ${admin.email}`);
 }
 
 function isMain(moduleUrl: string, argvPath: string | undefined) {

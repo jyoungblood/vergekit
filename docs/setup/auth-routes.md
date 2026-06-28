@@ -10,6 +10,10 @@ Use `src/auth/routes.ts` for route rules that should be enforced consistently by
 middleware. Use a route-local check when the rule is specific to one page or API
 handler.
 
+The boilerplate also ships with app roles powered by the Better Auth admin
+plugin: `admin`, `moderator`, `user`, and `banned`. Admin URL routes are
+reserved for users with the `app:administer` permission.
+
 ## Middleware-Protected Routes
 
 Add exact URLs to `protectedExactPaths` when one route needs authentication:
@@ -31,7 +35,6 @@ auth requirement:
 ```ts
 const protectedPrefixes: string[] = [
   '/settings/',
-  '/admin/',
   '/api/account/',
 ];
 ```
@@ -50,6 +53,28 @@ const protectedPrefixes: string[] = ['/settings/'];
 Astro filesystem route groups, such as `src/pages/(app)/dashboard.astro`, do not
 appear in request URLs. Add the URL path that the group produces, such as
 `/dashboard`, or a shared URL prefix used by the pages in that group.
+
+## Admin Routes
+
+`/admin` and `/admin/*` are protected separately from general authenticated
+routes. Anonymous users are redirected to `/login`; authenticated users without
+the `app:administer` permission receive a `403` response.
+
+Change admin route policy in `src/auth/routes.ts`:
+
+```ts
+const adminExactPaths = new Set(['/admin']);
+const adminPrefixes = ['/admin/'];
+```
+
+Change role permissions in `src/auth/permissions.ts`:
+
+```ts
+export const adminRole = accessControl.newRole({
+  ...adminAc.statements,
+  app: ['access', 'moderate', 'administer'],
+});
+```
 
 ## Route-Local Checks
 
@@ -94,11 +119,21 @@ inside the route when it should not apply globally.
 
 Use `protectedExactPaths` for single pages like `/dashboard`.
 
-Use `protectedPrefixes` for URL namespaces like `/settings/`, `/admin/`, or
-`/api/account/`.
+Use `protectedPrefixes` for URL namespaces like `/settings/` or
+`/api/account/`. Use the admin route policy for `/admin` and `/admin/*`.
 
 Use route-local checks when the response should be custom, especially for API
 routes that should return `401` JSON instead of redirecting to the login page.
+
+Use `userHasAppPermission` for local role checks:
+
+```ts
+import { userHasAppPermission } from '@/auth/permissions';
+
+if (!userHasAppPermission(locals.user, { app: ['moderate'] })) {
+  return new Response('Forbidden', { status: 403 });
+}
+```
 
 Keep Better Auth endpoints under `/api/auth` public. Sign in, sign up, session,
 callback, verification, reset, and sign-out requests must be able to reach Better

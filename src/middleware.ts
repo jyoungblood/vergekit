@@ -15,10 +15,17 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   const requestURL = new URL(context.request.url);
   const routePath = `${requestURL.pathname}${requestURL.search}`;
-  const access = resolveRouteAccess(routePath, context.locals.isAuthenticated);
+  const access = resolveRouteAccess(routePath, {
+    isAuthenticated: context.locals.isAuthenticated,
+    user: context.locals.user,
+  });
 
   if (access.type === 'allow') {
     return next();
+  }
+
+  if (access.type === 'forbidden') {
+    return new Response('Forbidden', { status: 403 });
   }
 
   return context.redirect(access.location);

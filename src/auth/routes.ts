@@ -1,16 +1,30 @@
+import {
+  type AppUserFields,
+  isAppBannedUser,
+  userHasAppPermission,
+} from '@/auth/permissions';
+
 export const AUTH_API_PREFIX = '/api/auth';
 export const LOGIN_PATH = '/login';
 export const SIGN_OUT_PATH = `${AUTH_API_PREFIX}/sign-out`;
 
 export type RouteAccessDecision =
   | { type: 'allow' }
-  | { type: 'redirect'; location: string };
+  | { type: 'redirect'; location: string }
+  | { type: 'forbidden' };
+
+export interface RouteAccessContext {
+  isAuthenticated: boolean;
+  user?: AppUserFields | null;
+}
 
 const protectedExactPaths = new Set(['/dashboard']);
+const adminExactPaths = new Set(['/admin']);
 
 const protectedPrefixes: string[] = [
   // Add path prefixes that require authentication, e.g. '/settings/' or '/api/account/'.
 ];
+const adminPrefixes = ['/admin/'];
 
 function getRoutePathname(routePath: string) {
   return new URL(routePath, 'https://vk.local').pathname;
@@ -113,22 +127,52 @@ export function isProtectedRoute(routePath: string) {
   return protectedPrefixes.some((prefix) => pathname.startsWith(prefix));
 }
 
+export function isAdminRoute(routePath: string) {
+  const pathname = getRoutePathname(routePath);
+
+  if (adminExactPaths.has(pathname)) {
+    return true;
+  }
+
+  return adminPrefixes.some((prefix) => pathname.startsWith(prefix));
+}
+
 export function getLoginRedirectPath(destination: string) {
   return `${LOGIN_PATH}?redirectTo=${encodeURIComponent(destination)}`;
 }
 
 export function resolveRouteAccess(
   routePath: string,
-  isAuthenticated: boolean,
+  auth: boolean | RouteAccessContext,
 ): RouteAccessDecision {
   const pathname = getRoutePathname(routePath);
+  const context =
+    typeof auth === 'boolean' ? { isAuthenticated: auth, user: null } : auth;
+  const isAuthenticated = context.isAuthenticated;
+  const isAdminPath = isAdminRoute(pathname);
+  const isProtectedPath = isProtectedRoute(pathname) || isAdminPath;
 
-  if (!isProtectedRoute(pathname) || isAuthenticated) {
+  if (!isProtectedPath) {
     return { type: 'allow' };
   }
 
-  return {
-    type: 'redirect',
-    location: getLoginRedirectPath(routePath),
-  };
+  if (!isAuthenticated) {
+    return {
+      type: 'redirect',
+      location: getLoginRedirectPath(routePath),
+    };
+  }
+
+  if (isAppBannedUser(context.user)) {
+    return { type: 'forbidden' };
+  }
+
+  if (
+    isAdminPath &&
+    !userHasAppPermission(context.user, { app: ['administer'] })
+  ) {
+    return { type: 'forbidden' };
+  }
+
+  return { type: 'allow' };
 }

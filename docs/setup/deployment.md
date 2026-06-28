@@ -95,7 +95,7 @@ npx wrangler secret list --env production
 4. Configure `BETTER_AUTH_SECRET` and any provider credentials with
    `wrangler secret put`.
 5. Run `npm run db:migrate:remote`.
-6. Optionally create a verified admin user with
+6. Optionally create a verified user with the `admin` role with
    `npm run init:admin -- --remote`.
 7. Run `npm run verify`.
 8. Deploy with the project Cloudflare workflow.

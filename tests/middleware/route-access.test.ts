@@ -17,6 +17,36 @@ describe('resolveRouteAccess', () => {
     expect(resolveRouteAccess('/dashboard', true)).toEqual({ type: 'allow' });
   });
 
+  it('blocks banned users from authenticated app routes', () => {
+    expect(
+      resolveRouteAccess('/dashboard', {
+        isAuthenticated: true,
+        user: { role: 'banned' },
+      }),
+    ).toEqual({ type: 'forbidden' });
+  });
+
+  it('requires admin app permission for admin routes', () => {
+    expect(resolveRouteAccess('/admin', false)).toEqual({
+      type: 'redirect',
+      location: '/login?redirectTo=%2Fadmin',
+    });
+
+    expect(
+      resolveRouteAccess('/admin/users', {
+        isAuthenticated: true,
+        user: { role: 'user' },
+      }),
+    ).toEqual({ type: 'forbidden' });
+
+    expect(
+      resolveRouteAccess('/admin/users', {
+        isAuthenticated: true,
+        user: { role: 'admin' },
+      }),
+    ).toEqual({ type: 'allow' });
+  });
+
   it('redirects unauthenticated page requests to login', () => {
     expect(resolveRouteAccess('/dashboard', false)).toEqual({
       type: 'redirect',

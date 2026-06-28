@@ -14,6 +14,8 @@ plain Tailwind UI base.
 - Drizzle ORM and Drizzle Kit migrations.
 - Better Auth with email/password, email verification, reset password, and D1
   storage.
+- Better Auth admin plugin roles for `admin`, `moderator`, `user`, and
+  `banned`.
 - Middleware that loads auth state into typed `Astro.locals`.
 - Public-by-default route auth with opt-in protected pages and APIs.
 - Email provider abstraction for console, Cloudflare Email, Resend, Mailgun, and
@@ -75,7 +77,7 @@ Apply local D1 migrations:
 npm run db:migrate:local
 ```
 
-Optionally create a verified local admin user after migrations:
+Optionally create a verified local user with the `admin` role after migrations:
 
 ```bash
 npm run init:admin
@@ -197,5 +199,5 @@ npm run db:generate         # generate Drizzle migrations
 npm run db:studio           # open Drizzle Studio for D1 HTTP
 npm run db:migrate:local    # apply D1 migrations locally
 npm run db:migrate:remote   # apply D1 migrations remotely
-npm run init:admin          # create a verified D1 admin user
+npm run init:admin          # create a verified D1 user with the admin role
 ```

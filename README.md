@@ -8,27 +8,27 @@ plain Tailwind UI base.
 
 ## What It Includes
 
-- Astro in server mode with strict TypeScript.
-- Cloudflare Workers adapter.
-- Cloudflare D1 as the supported runtime database.
-- Drizzle ORM and Drizzle Kit migrations.
+- Astro in server mode with strict TypeScript
+- Cloudflare Workers adapter
+- Cloudflare D1 as the supported runtime database
+- Drizzle ORM and Drizzle Kit migrations
 - Better Auth with email/password, email verification, reset password, and D1
-  storage.
+  storage
 - Better Auth admin plugin roles for `admin`, `moderator`, `user`, and
-  `banned`.
-- Middleware that loads auth state into typed `Astro.locals`.
-- Public-by-default route auth with opt-in protected pages and APIs.
-- Custom 404 and 500 error pages.
+  `banned`
+- Middleware that loads auth state into typed `Astro.locals`
+- Public-by-default route auth with opt-in protected pages and APIs
+- Custom 404 and 500 error pages
 - Email provider abstraction for console, Cloudflare Email, Resend, Mailgun, and
-  explicit Node SMTP usage.
-- Auth email templates rendered with `@backstro/email`.
-- Tailwind CSS v4.
-- Local Astro UI components.
-- Lucide Astro icons.
-- Zod helpers for API request validation.
-- Astro Actions example for form-backed mutations.
-- CSRF origin checks through Astro config.
-- Vitest, happy-dom, oxlint, and `npm run verify`.
+  explicit Node SMTP usage
+- Auth email templates rendered with `@backstro/email`
+- Tailwind CSS v4
+- Local Astro UI components
+- Lucide Astro icons
+- Zod helpers for API request validation
+- Astro Actions example for form-backed mutations
+- CSRF origin checks through Astro config
+- Vitest, happy-dom, oxlint, and `npm run verify`
 
 ## Quickstart
 

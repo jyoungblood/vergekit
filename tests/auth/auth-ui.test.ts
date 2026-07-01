@@ -9,8 +9,8 @@ function readProjectFile(path: string) {
 
 describe('minimal auth UI contract', () => {
   const requiredFiles = [
-    'src/components/ui/Button.astro',
-    'src/components/ui/Input.astro',
+    'src/ui/button/Button.astro',
+    'src/ui/input/Input.astro',
     'src/components/ui/Field.astro',
     'src/components/auth/AuthShell.astro',
     'src/pages/login.astro',
@@ -25,6 +25,47 @@ describe('minimal auth UI contract', () => {
 
   it.each(requiredFiles)('creates %s', (path) => {
     expect(existsSync(new URL(path, projectRoot))).toBe(true);
+  });
+
+  it('uses Bejamas-generated button and input components in auth UI', () => {
+    const buttonSource = readProjectFile('src/ui/button/Button.astro');
+    const inputSource = readProjectFile('src/ui/input/Input.astro');
+
+    expect(buttonSource).toContain('buttonVariants');
+    expect(buttonSource).toContain('data-slot="button"');
+    expect(inputSource).toContain('inputVariants');
+    expect(inputSource).toContain('data-slot={props["data-slot"] ?? "input"}');
+
+    const buttonPages = [
+      'src/pages/index.astro',
+      'src/pages/dashboard.astro',
+      'src/pages/login.astro',
+      'src/pages/register.astro',
+      'src/pages/auth/forgot-password.astro',
+      'src/pages/auth/reset-password.astro',
+      'src/pages/auth/verify-email.astro',
+    ];
+    const inputPages = [
+      'src/pages/login.astro',
+      'src/pages/register.astro',
+      'src/pages/auth/forgot-password.astro',
+      'src/pages/auth/reset-password.astro',
+      'src/pages/auth/verify-email.astro',
+    ];
+
+    for (const page of buttonPages) {
+      const source = readProjectFile(page);
+
+      expect(source).toContain("from '@/ui/button'");
+      expect(source).not.toContain("@/components/ui/Button.astro");
+      expect(source).not.toContain("@/components/ui/Input.astro");
+    }
+
+    for (const page of inputPages) {
+      const source = readProjectFile(page);
+
+      expect(source).toContain("from '@/ui/input'");
+    }
   });
 
   it('wires auth forms to the mounted Better Auth endpoints', () => {

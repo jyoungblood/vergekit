@@ -1,10 +1,10 @@
 ---
 import AuthShell from '@/components/auth/AuthShell.astro';
-import Button from '@/components/ui/Button.astro';
 import Field from '@/components/ui/Field.astro';
 import Icon from '@/components/ui/Icon.astro';
-import Input from '@/components/ui/Input.astro';
 import { appConfig } from '@/config/app';
+import { Button } from '@/ui/button';
+import { Input } from '@/ui/input';
 ---
 
 <AuthShell
@@ -43,7 +43,7 @@ import { appConfig } from '@/config/app';
       />
     </Field>
 
-    <Button type="submit" fullWidth>
+    <Button type="submit" class="w-full">
       <Icon name="badge-check" size={18} aria-hidden="true" />
       Send verification
     </Button>

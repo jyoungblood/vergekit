@@ -1,9 +1,9 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import Button from '@/components/ui/Button.astro';
 import Icon from '@/components/ui/Icon.astro';
 import { appConfig } from '@/config/app';
 import { authRouteConfig } from '@/config/auth';
+import { Button } from '@/ui/button';
 
 const isAuthenticated = Astro.locals.isAuthenticated;
 ---
@@ -29,18 +29,18 @@ const isAuthenticated = Astro.locals.isAuthenticated;
     {
       isAuthenticated ? (
         <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-          <Button href={appConfig.defaultAuthenticatedPath}>
+          <Button as="a" href={appConfig.defaultAuthenticatedPath}>
             <Icon name="layout-dashboard" size={18} aria-hidden="true" />
             Dashboard
           </Button>
         </div>
       ) : (
         <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-          <Button href={authRouteConfig.loginPath}>
+          <Button as="a" href={authRouteConfig.loginPath}>
             <Icon name="log-in" size={18} aria-hidden="true" />
             Sign in
           </Button>
-          <Button href="/register" variant="secondary">
+          <Button as="a" href="/register" variant="secondary">
             <Icon name="user-plus" size={18} aria-hidden="true" />
             Create account
           </Button>

@@ -1,10 +1,10 @@
 ---
 import AuthShell from '@/components/auth/AuthShell.astro';
-import Button from '@/components/ui/Button.astro';
 import Field from '@/components/ui/Field.astro';
 import Icon from '@/components/ui/Icon.astro';
-import Input from '@/components/ui/Input.astro';
 import { appConfig } from '@/config/app';
+import { Button } from '@/ui/button';
+import { Input } from '@/ui/input';
 
 const redirectTo =
   Astro.url.searchParams.get('redirectTo') ??
@@ -84,8 +84,7 @@ const redirectTo =
       </a>
     </div>
 
-    <Button type="submit" fullWidth>
-      <Icon name="log-in" size={18} aria-hidden="true" />
+    <Button type="submit" class="w-full">
       Sign in
     </Button>
   </form>

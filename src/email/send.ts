@@ -110,10 +110,6 @@ export function createMailerFromEnv(
         domain: runtimeEnv.MAILGUN_DOMAIN,
         fetcher: options.fetcher,
       });
-    case 'smtp-node':
-      throw new Error(
-        'Import src/email/providers/smtp-node for the explicit Node SMTP provider',
-      );
   }
 }
 

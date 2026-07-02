@@ -48,8 +48,10 @@ abstraction uses `console`.
 - `resend`: Requires `RESEND_API_KEY`. Sends with the Resend HTTP API.
 - `mailgun`: Requires `MAILGUN_API_KEY` and `MAILGUN_DOMAIN`. Sends with the
   Mailgun HTTP API.
-- `smtp-node`: Requires importing `src/email/providers/smtp-node` directly from
-  Node-only tooling. `sendEmail` intentionally throws for this provider.
+
+SMTP/Nodemailer adapters are intentionally not part of this Worker runtime
+surface. Prefer the Cloudflare Email binding for deployed Workers, or a
+fetch-based provider when an external email service is required.
 
 Put shared, non-secret configuration in `wrangler.jsonc`:
 

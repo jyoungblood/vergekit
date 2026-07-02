@@ -150,7 +150,7 @@ describe('email runtime factory', () => {
     ).toThrow('MAILGUN_API_KEY is required');
     expect(() =>
       createMailerFromEnv({ EMAIL_PROVIDER: 'smtp-node' }),
-    ).toThrow('Import src/email/providers/smtp-node');
+    ).toThrow('Unsupported EMAIL_PROVIDER "smtp-node"');
   });
 });
 

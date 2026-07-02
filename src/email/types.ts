@@ -3,7 +3,6 @@ export const EMAIL_PROVIDER_NAMES = [
   'cloudflare',
   'resend',
   'mailgun',
-  'smtp-node',
 ] as const;
 
 export type EmailProviderName = (typeof EMAIL_PROVIDER_NAMES)[number];
